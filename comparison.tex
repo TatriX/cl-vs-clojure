@@ -1,0 +1,83 @@
+% Created 2016-03-26 Sat 17:48
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usetheme{default}
+\author{}
+\date{\today}
+\title{comparison}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\begin{frame}[label=sec-1]{Disclaimer}
+First goes vanilla CL then optionally alexandria variant.
+
+Then goes Clojure.
+\end{frame}
+\begin{frame}[fragile,label=sec-2]{Collect chars from range into vector}
+ \begin{verbatim}
+(make-array 10 :initial-contents (loop for i from 65 below 75 collect (code-char i)))
+(map 'vector #'code-char (iota 10 :start 65))
+;; (#\A #\B #\C #\D #\E #\F #\G #\H #\I #\J)
+\end{verbatim}
+
+\begin{verbatim}
+(vec (map char (range 65 75)))
+;; [\A \B \C \D \E \F \G \H \I \J]
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile,label=sec-3]{Access element of vector}
+ \begin{verbatim}
+(aref #(1 2 3) 2)
+;; 3
+\end{verbatim}
+
+\begin{verbatim}
+(nth [1 2 3] 2)
+(get [1 2 3] 2)
+([1 2 3] 2)
+;; 3
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile,label=sec-4]{Vector to list}
+ \begin{verbatim}
+(coerce #(1 2 3) 'list)
+;; (1 2 3)
+(reverse (coerce #(1 2 3) 'list))
+;; (3 2 1)
+\end{verbatim}
+
+\begin{verbatim}
+(seq [1 2 3])
+;; (1 2 3)
+
+(rseq [1 2 3])
+;; (3 2 1)
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile,label=sec-5]{Skeleton}
+\end{frame}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

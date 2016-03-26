@@ -1,0 +1,50 @@
+* Disclaimer
+First goes vanilla CL then optionally alexandria variant.
+
+Then goes Clojure.
+* Collect chars from range into vector
+#+BEGIN_SRC lisp
+  (make-array 10 :initial-contents (loop for i from 65 below 75 collect (code-char i)))
+  (map 'vector #'code-char (iota 10 :start 65))
+  ;; (#\A #\B #\C #\D #\E #\F #\G #\H #\I #\J)
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (vec (map char (range 65 75)))
+  ;; [\A \B \C \D \E \F \G \H \I \J]
+#+END_SRC
+* Access element of vector
+#+BEGIN_SRC lisp
+  (aref #(1 2 3) 2)
+  ;; 3
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (nth [1 2 3] 2)
+  (get [1 2 3] 2)
+  ([1 2 3] 2)
+  ;; 3
+#+END_SRC
+* Vector to list
+#+BEGIN_SRC lisp
+  (coerce #(1 2 3) 'list)
+  ;; (1 2 3)
+  (reverse (coerce #(1 2 3) 'list))
+  ;; (3 2 1)
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (seq [1 2 3])
+  ;; (1 2 3)
+
+  (rseq [1 2 3])
+  ;; (3 2 1)
+#+END_SRC
+* Skeleton
+#+BEGIN_SRC lisp
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
+
+#+END_SRC
