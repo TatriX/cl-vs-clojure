@@ -1,5 +1,5 @@
 * Disclaimer
-I take examples in *clojure* from the "Joy of Clojure" book and then I
+I take examples in Clojure from the "Joy of Clojure" book and then I
 write equivalent code in Common List.
 
 * Structure
@@ -17,7 +17,8 @@ Then goes vanilla CL and optionally Alexandria variant.
 #+BEGIN_SRC lisp
   (make-array 10 :initial-contents (loop for i from 65 below 75 collect (code-char i)))
   (map 'vector #'code-char (iota 10 :start 65))
-  ;; (#\A #\B #\C #\D #\E #\F #\G #\H #\I #\J)
+  ;; #(#\A #\B #\C #\D #\E #\F #\G #\H #\I #\J)
+
 #+END_SRC
 ** Access element of a vector
 #+BEGIN_SRC clojure
@@ -147,11 +148,90 @@ Then goes vanilla CL and optionally Alexandria variant.
        collect (apply #'aref matrix yx)))
   ;; (4 2)
 #+END_SRC
-** Skeleton
+** Vector as stack
+*** Push
+#+BEGIN_SRC clojure
+  (let [vector [1 2 3]]
+    (conj vector 4))
+  ;; [1 2 3 4]
+#+END_SRC
+
 #+BEGIN_SRC lisp
+  (let ((vector (make-array 3 :initial-contents '(1 2 3) :adjustable t :fill-pointer 3)))
+    (vector-push-extend 4 vector)
+    vector)
+  ;; #(1 2 3 4)
+#+END_SRC
+*** Pop
+#+BEGIN_SRC clojure
+  (let [vector [1 2 3]]
+    (pop vector))
+  ;; [1 2]
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((vector (make-array 3 :initial-contents '(1 2 3) :fill-pointer 3)))
+    (vector-pop vector)
+    vector)
+  ;; #(1 2)
+#+END_SRC
+*** Peek
+#+BEGIN_SRC clojure
+  (let [vector [1 2 3]]
+    (peek vector))
+  ;; 3
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((vector (make-array 3 :initial-contents '(1 2 3))))
+    (aref vector (1- (length vector))))
+  ;; 3
+#+END_SRC
+** List as stack
+*** Push
+#+BEGIN_SRC clojure
+  (let [stack '(1 2 3)]
+    (conj stack 0))
+  ;; (0 1 2 3)
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((stack '(1 2 3)))
+    (push 0 stack))
+  ;; (0 1 2 3)
+#+END_SRC
+
+*** Pop
+#+BEGIN_SRC clojure
+  (let [stack '(1 2 3)]
+    (pop stack))
+  ;; (2 3)
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((stack '(1 2 3)))
+    (pop stack)
+    stack)
+  ;; (2 3)
+#+END_SRC
+*** Peek
+#+BEGIN_SRC clojure
+  (let [stack '(1 2 3)]
+    (peek stack))
+  ;; 1
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((stack '(1 2 3)))
+    (first stack))
+  ;; 1
+#+END_SRC
+* Misc
+** Skeleton
+#+BEGIN_SRC clojure
 
 #+END_SRC
 
-#+BEGIN_SRC clojure
+#+BEGIN_SRC lisp
 
 #+END_SRC
