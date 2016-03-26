@@ -115,7 +115,7 @@ Then goes vanilla CL and optionally Alexandria variant.
     matrix)
   ;; #2A((1 2 3) (4 5 600) (7 8 9))
 #+END_SRC
-* Skeleton
+* Select neighbors values from matrix
 #+BEGIN_SRC clojure
   (defn neighbors
     ([size yx] (neighbors [[-1 0] [1 0] [0 -1] [0 1]] size yx))
