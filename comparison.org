@@ -7,7 +7,8 @@ First goes Clojure.
 
 Then goes vanilla CL and optionally Alexandria variant.
 
-* Collect chars from range into a vector
+* Vectors
+** Collect chars from range into a vector
 #+BEGIN_SRC clojure
   (vec (map char (range 65 75)))
   ;; [\A \B \C \D \E \F \G \H \I \J]
@@ -18,7 +19,7 @@ Then goes vanilla CL and optionally Alexandria variant.
   (map 'vector #'code-char (iota 10 :start 65))
   ;; (#\A #\B #\C #\D #\E #\F #\G #\H #\I #\J)
 #+END_SRC
-* Access element of a vector
+** Access element of a vector
 #+BEGIN_SRC clojure
   (nth [1 2 3] 2)
   (get [1 2 3] 2)
@@ -30,7 +31,7 @@ Then goes vanilla CL and optionally Alexandria variant.
   (aref #(1 2 3) 2)
   ;; 3
 #+END_SRC
-* Vector to a list
+** Vector to a list
 #+BEGIN_SRC clojure
   (seq [1 2 3])
   ;; (1 2 3)
@@ -45,7 +46,7 @@ Then goes vanilla CL and optionally Alexandria variant.
   (reverse (coerce #(1 2 3) 'list))
   ;; (3 2 1)
 #+END_SRC
-* Change vector's element
+** Change vector's element
 #+BEGIN_SRC clojure
   (assoc [1 2 3] 2 13)
   ;; [1 2 13]
@@ -55,7 +56,7 @@ Then goes vanilla CL and optionally Alexandria variant.
   (setf (aref #(1 2 3) 2) 13)
   ;; 13
 #+END_SRC
-* Replace elements in a vector
+** Replace elements in a vector
 #+BEGIN_SRC clojure
   (replace {2 :a, 4 :b} [1 2 3 2 3 4])
   ;; [1 :a 3 :a 3 :b]
@@ -65,7 +66,7 @@ Then goes vanilla CL and optionally Alexandria variant.
   (substitute :b 4 (substitute :a 2 #(1 2 3 2 3 4)))
   ;; #(1 :a 3 :a 3 :b)
 #+END_SRC
-* Access matrix element
+** Access matrix element
 #+BEGIN_SRC clojure
   (get-in [[1 2 3]
            [4 5 6]
@@ -81,7 +82,7 @@ Then goes vanilla CL and optionally Alexandria variant.
         1 2)
   ;; 6
 #+END_SRC
-* Change matrix's element
+** Change matrix's element
 #+BEGIN_SRC clojure
   (let [matrix [[1 2 3]
                 [4 5 6]
@@ -98,7 +99,7 @@ Then goes vanilla CL and optionally Alexandria variant.
     matrix)
   ;; #2A((1 2 3) (4 5 x) (7 8 9))
 #+END_SRC
-* Change matrix's element by applying function to it
+** Change matrix's element by applying function to it
 #+BEGIN_SRC clojure
   (let [matrix [[1 2 3]
                 [4 5 6]
@@ -115,7 +116,7 @@ Then goes vanilla CL and optionally Alexandria variant.
     matrix)
   ;; #2A((1 2 3) (4 5 600) (7 8 9))
 #+END_SRC
-* Select neighbor values from matrix
+** Select neighbor values from matrix
 #+BEGIN_SRC clojure
   (defn neighbors
     ([size yx] (neighbors [[-1 0] [1 0] [0 -1] [0 1]] size yx))
@@ -132,9 +133,8 @@ Then goes vanilla CL and optionally Alexandria variant.
 #+END_SRC
 
 #+BEGIN_SRC lisp
-  (defun neighbors (size yx)
+  (defun neighbors (size yx &key (deltas '((-1 0) (1 0) (0 -1) (0 1))))
     (loop
-       with deltas = '((-1 0) (1 0) (0 -1) (0 1))
        for delta in deltas
        for new-yx = (mapcar #'+ delta yx)
        when (every (lambda (n) (< -1 n size)) new-yx)
@@ -147,7 +147,7 @@ Then goes vanilla CL and optionally Alexandria variant.
        collect (apply #'aref matrix yx)))
   ;; (4 2)
 #+END_SRC
-* Skeleton
+** Skeleton
 #+BEGIN_SRC lisp
 
 #+END_SRC
