@@ -132,9 +132,8 @@ Then goes vanilla CL and optionally Alexandria variant.
 #+END_SRC
 
 #+BEGIN_SRC lisp
-  (defun neighbors (size yx)
+  (defun neighbors (size yx &key (deltas '((-1 0) (1 0) (0 -1) (0 1))))
     (loop
-       with deltas = '((-1 0) (1 0) (0 -1) (0 1))
        for delta in deltas
        for new-yx = (mapcar #'+ delta yx)
        when (every (lambda (n) (< -1 n size)) new-yx)
