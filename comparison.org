@@ -1,6 +1,6 @@
 * Disclaimer
-I take examples in *clojure* from the "Joy of Clojure" book then
-write functionally equivalent code on Common List
+I take examples in *clojure* from the "Joy of Clojure" book and then I
+write equivalent code in Common List.
 
 * Structure
 First goes Clojure.
@@ -65,11 +65,93 @@ Then goes vanilla CL and optionally Alexandria variant.
   (substitute :b 4 (substitute :a 2 #(1 2 3 2 3 4)))
   ;; #(1 :a 3 :a 3 :b)
 #+END_SRC
-* Skeleton
+* Access matrix element
 #+BEGIN_SRC clojure
-
+  (get-in [[1 2 3]
+           [4 5 6]
+           [7 8 9]]
+          [1 2])
+  ;; 6
 #+END_SRC
 
 #+BEGIN_SRC lisp
+  (aref #2a((1 2 3)
+            (4 5 6)
+            (7 8 9))
+        1 2)
+  ;; 6
+#+END_SRC
+* Change matrix's element
+#+BEGIN_SRC clojure
+  (let [matrix [[1 2 3]
+                [4 5 6]
+                [7 8 9]]]
+    (assoc-in matrix [1 2] 'x))
+  ;; [[1 2 3] [4 5 x] [7 8 9]]
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((matrix #2a((1 2 3)
+                    (4 5 6)
+                    (7 8 9))))
+    (setf (aref matrix 1 2) 'x) ; setf returns 'x
+    matrix)
+  ;; #2A((1 2 3) (4 5 x) (7 8 9))
+#+END_SRC
+* Change matrix's element by applying function to it
+#+BEGIN_SRC clojure
+  (let [matrix [[1 2 3]
+                [4 5 6]
+                [7 8 9]]]
+    (update-in matrix [1 2] * 100))
+  ;; [[1 2 3] [4 5 600] [7 8 9]]
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (let ((matrix #2a((1 2 3)
+                    (4 5 6)
+                    (7 8 9))))
+    (setf (aref matrix 1 2) (* 100 (aref matrix 1 2)))
+    matrix)
+  ;; #2A((1 2 3) (4 5 600) (7 8 9))
+#+END_SRC
+* Skeleton
+#+BEGIN_SRC clojure
+  (defn neighbors
+    ([size yx] (neighbors [[-1 0] [1 0] [0 -1] [0 1]] size yx))
+    ([deltas size yx]
+     (filter (fn [new-yx]
+               (every? #(< -1 % size) new-yx))
+             (map #(map + yx %) deltas))))
+
+  (let [matrix [[1 2 3]
+                [4 5 6]
+                [7 8 9]]]
+    (map #(get-in matrix %) (neighbors 3 [0 0])))
+  ;; (4 2)
+#+END_SRC
+
+#+BEGIN_SRC lisp
+  (defun neighbors (size yx)
+    (loop
+       with deltas = '((-1 0) (1 0) (0 -1) (0 1))
+       for delta in deltas
+       for new-delta = (mapcar #'+ delta yx)
+       when (every (lambda (n) (< -1 n size)) new-delta)
+       collect new-delta))
+
+  (let ((matrix #2a((1 2 3)
+                    (4 5 6)
+                    (7 8 9))))
+    (loop for yx in (neighbors 3 '(0 0))
+       collect (apply #'aref matrix yx)))
+  ;; (4 2)
+#+END_SRC
+* Skeleton
+#+BEGIN_SRC lisp
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
 
 #+END_SRC
