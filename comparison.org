@@ -115,7 +115,7 @@ Then goes vanilla CL and optionally Alexandria variant.
     matrix)
   ;; #2A((1 2 3) (4 5 600) (7 8 9))
 #+END_SRC
-* Select neighbors values from matrix
+* Select neighbor values from matrix
 #+BEGIN_SRC clojure
   (defn neighbors
     ([size yx] (neighbors [[-1 0] [1 0] [0 -1] [0 1]] size yx))
@@ -136,9 +136,9 @@ Then goes vanilla CL and optionally Alexandria variant.
     (loop
        with deltas = '((-1 0) (1 0) (0 -1) (0 1))
        for delta in deltas
-       for new-delta = (mapcar #'+ delta yx)
-       when (every (lambda (n) (< -1 n size)) new-delta)
-       collect new-delta))
+       for new-yx = (mapcar #'+ delta yx)
+       when (every (lambda (n) (< -1 n size)) new-yx)
+       collect new-yx))
 
   (let ((matrix #2a((1 2 3)
                     (4 5 6)
