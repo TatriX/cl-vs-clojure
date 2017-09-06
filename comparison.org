@@ -1,6 +1,6 @@
 * Disclaimer
 I take examples in Clojure from the "Joy of Clojure" book and then I
-write equivalent code in Common List.
+write equivalent code in Common Lisp.
 
 * Structure
 First goes Clojure.
